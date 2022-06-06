@@ -4,7 +4,7 @@ const User = require("../models/user");
 
 // Sign up GET
 exports.signUpGET = function (req, res) {
-  res.send("Sign Up GET: Not implemented!");
+  res.render("signup", {});
 };
 
 // Sign up POST
