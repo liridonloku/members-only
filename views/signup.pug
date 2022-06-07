@@ -1,23 +1,31 @@
 extends layout 
 
 block content 
-  .container
-    h1.mb-5 Signup
-    form(action="", method="post") 
+  .container.d-flex.flex-column.align-items-center
+    h1.mb-5 Sign Up
+    form.border.rounded.p-4(action="", method="post") 
       .mb-3 
         label.form-label(for="firstName") First Name
-        input.form-control(type='text' name='firsNname' required)
+        input.form-control(type='text' name='firstName' id='firstName' value=(firstName ? firstName : '') required)
       .mb-3 
         label.form-label(for="lastName") Last Name
-        input.form-control(type='text' name='lastName' required)        
+        input.form-control(type='text' name='lastName' id='lastName' value=(lastName ? lastName : '') required)        
       .mb-3 
         label.form-label(for="email") Email
-        input.form-control(type='email' name='email' required) 
+        input.form-control(type='email' name='email' id='email' value=(email ? email : '') required) 
       .mb-3 
         label.form-label(for="password") Password
-        input.form-control(type='password' name='password' required)  
+        input.form-control(type='password' name='password' class=(passwordError ? 'is-invalid' : '') id='password' required)
+        if(passwordError)
+          .invalid-feedback=passwordError.msg 
       .mb-3 
         label.form-label(for="confirmPassword") Confirm Password
-        input.form-control(type='password' name='confirmPassword' required)
-      .mb-3 
-        button.btn.btn-primary(type="submit") Create Account  
+        input.form-control(type='password' name='confirmPassword' class=(confirmPasswordError ? 'is-invalid' : '') id='confirmPassword' required)
+        if(confirmPasswordError)
+          .invalid-feedback=confirmPasswordError.msg
+      .text-center 
+        button.btn.btn-success(type="submit") Create Account  
+    if(errors)
+      each error in errors 
+        p=error.param
+        p=error.msg

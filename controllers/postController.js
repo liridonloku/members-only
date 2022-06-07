@@ -3,7 +3,7 @@ const User = require("../models/user");
 
 // Posts Index
 exports.index = function (req, res) {
-  res.send("Posts index: Not implemented.");
+  res.render("index", { title: "Members Only" });
 };
 
 // New post GET
