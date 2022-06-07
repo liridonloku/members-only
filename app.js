@@ -6,6 +6,7 @@ const logger = require("morgan");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const User = require("./models/user");
@@ -28,8 +29,8 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
+  new LocalStrategy((email, password, done) => {
+    User.findOne({ email: email }, (err, user) => {
       if (err) {
         return done(err);
       }
@@ -73,6 +74,11 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 app.use("/", indexRouter);
 

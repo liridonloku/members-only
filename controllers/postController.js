@@ -3,6 +3,9 @@ const User = require("../models/user");
 
 // Posts Index
 exports.index = function (req, res) {
+  if (!req.user) {
+    res.redirect("/login");
+  }
   res.render("index", { title: "Members Only" });
 };
 

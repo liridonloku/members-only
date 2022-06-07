@@ -4,9 +4,15 @@ const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 const req = require("express/lib/request");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
+const async = require("async");
 
 // Sign up GET
 exports.signUpGET = function (req, res) {
+  if (req.user) {
+    console.log(req.user);
+    res.redirect("/");
+  }
   res.render("signup", {});
 };
 
@@ -22,7 +28,7 @@ exports.signUpPOST = [
     .isLength({ min: 1 })
     .escape(),
   body("email", "Email is invalid").normalizeEmail().isEmail(),
-  body("password", "Password must be at least 6 characters long.")
+  body("password", "Password must be at least 6 characters long")
     .isLength({ min: 6 })
     .escape(),
   body("confirmPassword", "Passwords don't match").custom(
@@ -44,18 +50,26 @@ exports.signUpPOST = [
           .find((error) => error.param === "confirmPassword"),
       });
     }
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+    bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       if (err) return next(err);
-      const user = new User({
+      new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: hashedPassword,
         membershipStatus: "user",
-      }).save((err) => {
-        if (err) return next(err);
-        res.redirect("/");
-      });
+      })
+        .save()
+        .then((savedUser) => {
+          const user = {
+            id: savedUser._id,
+            email: savedUser.email,
+          };
+          req.login(user, (err) => {
+            if (err) return next(err);
+            res.redirect("/");
+          });
+        });
     });
   },
 ];
