@@ -2,11 +2,9 @@ const Post = require("../models/post");
 const User = require("../models/user");
 
 // Posts Index
-exports.index = function (req, res) {
-  if (!req.user) {
-    res.redirect("/login");
-  }
-  res.render("index", { title: "Members Only" });
+exports.index = async function (req, res) {
+  const posts = await Post.find({}).populate("user").sort({ date: "asc" });
+  res.render("index", { title: "Members Only", posts: posts });
 };
 
 // New post GET

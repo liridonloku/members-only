@@ -6,5 +6,22 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel="stylesheet", href="/css/bootstrap.min.css")
     script(src="/js/bootstrap.min.js") 
-  body.bg-light.p-3
-    block content
+  body.bg-light
+    header.mb-4
+      nav.navbar.sticky-top.navbar-dark.bg-dark.navbar-expand-lg
+        div.container-fluid
+          a.navbar-brand(href='#') Members
+          button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation")
+            span.navbar-toggler-icon
+        div.collapse.navbar-collapse.px-3(id='navbarNav')
+          ul.navbar-nav 
+            li.nav-item 
+              a.nav-link.text-nowrap(href='/login') Log in  
+            li.nav-item 
+              a.nav-link.text-nowrap(href='/signup') Register 
+            li.nav-item 
+              a.nav-link.text-nowrap(href='/membership-form') Become a member 
+            li.nav-item 
+              a.nav-link.text-nowrap(href='/admin-form') Become an Admin  
+    .container
+      block content
