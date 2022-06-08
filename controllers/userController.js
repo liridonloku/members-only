@@ -72,10 +72,6 @@ exports.signUpPOST = [
 
 // Login GET
 exports.logInGET = function (req, res) {
-  if (req.user) {
-    console.log(req.user);
-    res.redirect("/");
-  }
   res.render("login", {});
 };
 
@@ -83,9 +79,9 @@ exports.logInGET = function (req, res) {
 exports.logInPOST = [
   passport.authenticate("local", {
     failureRedirect: "/login",
+    failureFlash: true,
   }),
   (req, res, next) => {
-    console.log(req);
     res.redirect("/");
   },
 ];
