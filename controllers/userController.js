@@ -9,10 +9,6 @@ const async = require("async");
 
 // Sign up GET
 exports.signUpGET = function (req, res) {
-  if (req.user) {
-    console.log(req.user);
-    res.redirect("/");
-  }
   res.render("signup", {});
 };
 
@@ -76,13 +72,23 @@ exports.signUpPOST = [
 
 // Login GET
 exports.logInGET = function (req, res) {
-  res.send("Log In GET: Not implemented!");
+  if (req.user) {
+    console.log(req.user);
+    res.redirect("/");
+  }
+  res.render("login", {});
 };
 
 // Login POST
-exports.logInPOST = function (req, res) {
-  res.send("Log In POST: Not implemented!");
-};
+exports.logInPOST = [
+  passport.authenticate("local", {
+    failureRedirect: "/login",
+  }),
+  (req, res, next) => {
+    console.log(req);
+    res.redirect("/");
+  },
+];
 
 // Memebership form GET
 exports.membershipFormGET = function (req, res) {

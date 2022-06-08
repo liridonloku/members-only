@@ -25,7 +25,3 @@ block content
           .invalid-feedback=confirmPasswordError.msg
       .text-center 
         button.btn.btn-success(type="submit") Create Account  
-    if(errors)
-      each error in errors 
-        p=error.param
-        p=error.msg
