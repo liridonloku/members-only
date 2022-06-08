@@ -2,38 +2,39 @@ const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
 const userController = require("../controllers/userController");
+const { isLogedIn, isNotLogedIn } = require("../loginStatus");
 
 // Index - GET Posts
-router.get("/", postController.index);
+router.get("/", isLogedIn, postController.index);
 
 // GET new post
-router.get("/new-post", postController.newPostGET);
+router.get("/new-post", isLogedIn, postController.newPostGET);
 
 // POST new post
-router.post("/new-post", postController.newPostPOST);
+router.post("/new-post", isLogedIn, postController.newPostPOST);
 
 // GET Sign up
-router.get("/signup", userController.signUpGET);
+router.get("/signup", isNotLogedIn, userController.signUpGET);
 
 // POST Sign up
-router.post("/signup", userController.signUpPOST);
+router.post("/signup", isNotLogedIn, userController.signUpPOST);
 
 // GET Log In
-router.get("/login", userController.logInGET);
+router.get("/login", isNotLogedIn, userController.logInGET);
 
 // POST Log In
-router.post("/login", userController.logInPOST);
+router.post("/login", isNotLogedIn, userController.logInPOST);
 
 // GET Membership form
-router.get("/membership-form", userController.membershipFormGET);
+router.get("/membership-form", isLogedIn, userController.membershipFormGET);
 
 // POST Membership form
-router.post("/membership-form", userController.membershipFormPOST);
+router.post("/membership-form", isLogedIn, userController.membershipFormPOST);
 
 // GET Admin form
-router.get("/admin-form", userController.adminFormGET);
+router.get("/admin-form", isLogedIn, userController.adminFormGET);
 
 // POST Admin form
-router.post("/admin-form", userController.adminFormPOST);
+router.post("/admin-form", isLogedIn, userController.adminFormPOST);
 
 module.exports = router;
