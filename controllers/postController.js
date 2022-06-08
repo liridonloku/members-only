@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const User = require("../models/user");
+const { body, validationResult } = require("express-validator");
 
 // Posts Index
 exports.index = async function (req, res) {
@@ -9,10 +10,41 @@ exports.index = async function (req, res) {
 
 // New post GET
 exports.newPostGET = function (req, res) {
-  res.send("New post GET: Not implemented");
+  res.render("newPost");
 };
 
 // New post POST
-exports.newPostPOST = function (req, res) {
-  res.send("New post POST: Not implemented.");
-};
+exports.newPostPOST = [
+  // Validate and sanitize
+  body("title", "Title cannot be empty").trim().isLength({ min: 1 }).escape(),
+  body("content", "Content cannot be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  // Handle request
+  function (req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render("newPost", {
+        title: req.body.title,
+        content: req.body.content,
+        titleError: errors
+          .array({ onlyFirstError: true })
+          .find((error) => error.param === "title"),
+        contentError: errors
+          .array({ onlyFirstError: true })
+          .find((error) => error.param === "content"),
+      });
+    }
+    const post = new Post({
+      title: req.body.title,
+      content: req.body.content,
+      date: new Date(),
+      user: req.user._id.toString(),
+    });
+    post.save(function (err) {
+      if (err) return next(err);
+      res.redirect("/");
+    });
+  },
+];

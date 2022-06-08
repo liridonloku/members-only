@@ -1,0 +1,17 @@
+extends layout 
+block content 
+  .container.d-flex.flex-column.align-items-center
+    h1.mb-5 New Post
+    form.w-100.border.rounded.p-4(action="", method="post") 
+      .mb-3 
+        label.form-label(for="title") Title
+        input.form-control(type='text' name='title' class=(titleError ? 'is-invalid' : '') id='title' value=(title ? title : '') required) 
+        if(titleError)
+          .invalid-feedback=titleError.msg 
+      .mb-3 
+        label.form-label(for="content") Content
+        textarea.form-control(name='content' class=(contentError ? 'is-invalid' : '') id='content' cols="30" rows="10" value=(content ? content : '') required)
+        if(contentError)
+          .invalid-feedback=contentError.msg 
+      .text-center 
+        button.btn.btn-success(type="submit") Post 

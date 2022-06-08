@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const Post = require("../models/post");
 const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
