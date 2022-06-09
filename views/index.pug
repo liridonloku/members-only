@@ -4,7 +4,9 @@ block content
   if(!currentUser)
     p Log in to make a post
   if(currentUser)
-    a.btn.btn-success.mb-3(href='/new-post') New post
+    h2.text-center Welcome #{currentUser.firstName}, what's on your mind today?
+    .text-center
+      a.btn.btn-success.mb-3(href='/new-post') New post
   if(posts)
     if(!currentUser || currentUser.membershipStatus === 'user')
       each post in posts 
