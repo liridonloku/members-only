@@ -1,6 +1,9 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  .container.d-flex.flex-column.align-items-center
+    h1= message
+    h2= error.status
+    h3
+      a(href="/") Go back 
+      | to the main page

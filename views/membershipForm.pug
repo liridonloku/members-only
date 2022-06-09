@@ -1,0 +1,14 @@
+extends layout 
+
+block content 
+  .container.d-flex.flex-column.align-items-center
+    h1.mb-3 Become a member 
+    .alert.alert-success(role='alert') Hi #{currentUser.firstName}, please type the #[b secret] password to become a member. Becoming a member will allow you to see the date and author of all posts.
+    form.border.rounded.p-4(action="", method="post") 
+      .mb-3 
+        label.form-label(for="password") Password
+        input.form-control(type='password' name='password' class=(passwordError ? 'is-invalid' : '') id='password' required)
+        if(passwordError)
+          .invalid-feedback=passwordError.msg 
+      .text-center 
+        button.btn.btn-success(type="submit") Log In  

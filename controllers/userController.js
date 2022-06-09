@@ -87,12 +87,32 @@ exports.logInPOST = [
 
 // Memebership form GET
 exports.membershipFormGET = function (req, res) {
-  res.send("Membership form GET: Not implemented!");
+  res.render("membershipForm");
 };
 
 // Membership form POST
 exports.membershipFormPOST = function (req, res) {
-  res.send("Membership form POST: Not implemented!");
+  if (req.body.password !== "secret") {
+    return res.render("membershipForm", {
+      passwordError: { msg: "Wrong password" },
+    });
+  }
+  User.findByIdAndUpdate(
+    req.user._id,
+    {
+      _id: req.user._id,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      email: req.user.email,
+      password: req.user.password,
+      membershipStatus: "member",
+    },
+    {},
+    function (err, user) {
+      if (err) return next(err);
+      res.redirect("/");
+    }
+  );
 };
 
 // Admin form GET
