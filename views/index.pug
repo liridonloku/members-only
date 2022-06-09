@@ -2,9 +2,9 @@ extends layout
 
 block content
   if(!currentUser)
-    p Log in to make a post
+    h4.text-center Log in to make a post
   if(currentUser)
-    h2.text-center Welcome #{currentUser.firstName}, what's on your mind today?
+    h4.text-center Welcome #{currentUser.firstName}, what's on your mind today?
     .text-center
       a.btn.btn-success.mb-3(href='/new-post') New post
   if(posts)
