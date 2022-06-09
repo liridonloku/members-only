@@ -4,7 +4,7 @@ const { body, validationResult } = require("express-validator");
 
 // Posts Index
 exports.index = async function (req, res) {
-  const posts = await Post.find({}).populate("user").sort({ date: "asc" });
+  const posts = await Post.find({}).populate("user").sort({ date: "desc" });
   res.render("index", { title: "Members Only", posts: posts });
 };
 
@@ -16,11 +16,8 @@ exports.newPostGET = function (req, res) {
 // New post POST
 exports.newPostPOST = [
   // Validate and sanitize
-  body("title", "Title cannot be empty").trim().isLength({ min: 1 }).escape(),
-  body("content", "Content cannot be empty")
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
+  body("title", "Title cannot be empty").trim().isLength({ min: 1 }),
+  body("content", "Content cannot be empty").trim().isLength({ min: 1 }),
   // Handle request
   function (req, res, next) {
     const errors = validationResult(req);

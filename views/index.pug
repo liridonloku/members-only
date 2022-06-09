@@ -8,7 +8,7 @@ block content
   if(posts)
     if(!currentUser || currentUser.membershipStatus === 'user')
       each post in posts 
-        .card 
+        .card.mb-3 
           .card-header Unknown author
           .card-body 
             h5.card-title #{post.title}
@@ -16,7 +16,7 @@ block content
             p.text-end.mb-0 date
     if(currentUser && currentUser.membershipStatus === 'member')
       each post in posts 
-        .card 
+        .card.mb-3 
           .card-header #{`${post.user.firstName} ${post.user.lastName}`}
           .card-body 
             h5.card-title #{post.title}
@@ -24,7 +24,7 @@ block content
             p.text-end.mb-0 #{post.date.toLocaleString()}
     if(currentUser && currentUser.membershipStatus === 'admin')
       each post in posts 
-        .card 
+        .card.mb-3 
           .card-header.d-flex.justify-content-between.align-items-center
             p.m-0 #{`${post.user.firstName} ${post.user.lastName}`}
             form.d-flex.align-items-center(action=`/${post._id}/delete`, method="post") 
