@@ -14,14 +14,21 @@ html
           button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation")
             span.navbar-toggler-icon
         div.collapse.navbar-collapse.px-3(id='navbarNav')
-          ul.navbar-nav 
-            li.nav-item 
-              a.nav-link.text-nowrap(href='/login') Log in  
-            li.nav-item 
-              a.nav-link.text-nowrap(href='/signup') Register 
-            li.nav-item 
-              a.nav-link.text-nowrap(href='/membership-form') Become a member 
-            li.nav-item 
-              a.nav-link.text-nowrap(href='/admin-form') Become an Admin  
+          ul.navbar-nav
+            if(!currentUser) 
+              li.nav-item 
+                a.nav-link.text-nowrap(href='/login') Log in  
+              li.nav-item 
+                a.nav-link.text-nowrap(href='/signup') Register 
+            if(currentUser)
+              if(currentUser.membershipStatus === 'user')
+                li.nav-item 
+                  a.nav-link.text-nowrap(href='/membership-form') Become a member 
+              if(currentUser.membershipStatus !== 'admin')
+                li.nav-item 
+                  a.nav-link.text-nowrap(href='/admin-form') Become an Admin  
+              li.nav-item 
+                form(action="/logout", method="post") 
+                  button.btn.btn-link.nav-link.text-nowrap(type='submit') Log Out
     .container
       block content
