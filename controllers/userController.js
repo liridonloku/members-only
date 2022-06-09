@@ -117,12 +117,32 @@ exports.membershipFormPOST = function (req, res) {
 
 // Admin form GET
 exports.adminFormGET = function (req, res) {
-  res.send("Admin form GET: Not implemented!");
+  res.render("adminForm");
 };
 
 // Admin form POST
 exports.adminFormPOST = function (req, res) {
-  res.send("Admin form POST: Not implemented!");
+  if (req.body.password !== process.env.ADMIN_PASSWORD) {
+    return res.render("adminForm", {
+      passwordError: { msg: "Wrong password" },
+    });
+  }
+  User.findByIdAndUpdate(
+    req.user._id,
+    {
+      _id: req.user._id,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      email: req.user.email,
+      password: req.user.password,
+      membershipStatus: "admin",
+    },
+    {},
+    function (err, user) {
+      if (err) return next(err);
+      res.redirect("/");
+    }
+  );
 };
 
 // Log Out GET - will redirect to index
