@@ -104,3 +104,11 @@ exports.adminFormGET = function (req, res) {
 exports.adminFormPOST = function (req, res) {
   res.send("Admin form POST: Not implemented!");
 };
+
+// Log Out POST
+exports.logOutPost = function (req, res, next) {
+  req.logOut((err) => {
+    if (err) return next(err);
+    res.redirect("/login");
+  });
+};

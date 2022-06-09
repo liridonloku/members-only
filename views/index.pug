@@ -1,9 +1,7 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  a.btn.btn-success(href='/new-post') New post
+  a.btn.btn-success.mb-3(href='/new-post') New post
   if(posts)
     each post in posts 
       p=post.content

@@ -37,4 +37,7 @@ router.get("/admin-form", isLogedIn, userController.adminFormGET);
 // POST Admin form
 router.post("/admin-form", isLogedIn, userController.adminFormPOST);
 
+// POST Log Out
+router.post("/logout", isLogedIn, userController.logOutPost);
+
 module.exports = router;
