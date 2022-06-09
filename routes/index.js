@@ -37,6 +37,9 @@ router.get("/admin-form", isLogedIn, userController.adminFormGET);
 // POST Admin form
 router.post("/admin-form", isLogedIn, userController.adminFormPOST);
 
+// Log out GET - will redirect to index
+router.get("/logout", isLogedIn, userController.logOutGet);
+
 // POST Log Out
 router.post("/logout", isLogedIn, userController.logOutPost);
 
