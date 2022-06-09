@@ -1,7 +1,38 @@
 extends layout
 
 block content
-  a.btn.btn-success.mb-3(href='/new-post') New post
+  if(!currentUser)
+    p
+      a.btn.btn-success(href='/login') Log In 
+      | to make a post
+  if(currentUser)
+    a.btn.btn-success.mb-3(href='/new-post') New post
   if(posts)
-    each post in posts 
-      p=post.content
+    if(!currentUser || currentUser.membershipStatus === 'user')
+      each post in posts 
+        .card 
+          .card-header Unknown author
+          .card-body 
+            h5.card-title #{post.title}
+            p.card-text #{post.content}
+            p.text-end.mb-0 date
+    if(currentUser && currentUser.membershipStatus === 'member')
+      each post in posts 
+        .card 
+          .card-header #{`${post.user.firstName} ${post.user.lastName}`}
+          .card-body 
+            h5.card-title #{post.title}
+            p.card-text #{post.content}
+            p.text-end.mb-0 #{post.date.toLocaleString()}
+    if(currentUser && currentUser.membershipStatus === 'admin')
+      each post in posts 
+        .card 
+          .card-header.d-flex.justify-content-between.align-items-center
+            p.m-0 #{`${post.user.firstName} ${post.user.lastName}`}
+            form.d-flex.align-items-center(action=`/${post._id}/delete`, method="post") 
+              button.btn-close(type='submit')
+          .card-body 
+            h5.card-title #{post.title}
+            p.card-text #{post.content}
+            p.text-end.mb-0 #{post.date.toLocaleString()}
+

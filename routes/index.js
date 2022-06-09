@@ -5,13 +5,19 @@ const userController = require("../controllers/userController");
 const { isLogedIn, isNotLogedIn } = require("../loginStatus");
 
 // Index - GET Posts
-router.get("/", isLogedIn, postController.index);
+router.get("/", postController.index);
 
 // GET new post
 router.get("/new-post", isLogedIn, postController.newPostGET);
 
 // POST new post
 router.post("/new-post", isLogedIn, postController.newPostPOST);
+
+// GET delete post
+router.get("/:id/delete", isLogedIn, postController.deletePostGET);
+
+// POST delete post
+router.post("/:id/delete", isLogedIn, postController.deletePostPOST);
 
 // GET Sign up
 router.get("/signup", isNotLogedIn, userController.signUpGET);

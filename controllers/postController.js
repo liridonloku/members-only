@@ -48,3 +48,20 @@ exports.newPostPOST = [
     });
   },
 ];
+
+// Delete post GET - redirects to index
+
+exports.deletePostGET = function (req, res, next) {
+  res.redirect("/");
+};
+
+// Delete post POST
+exports.deletePostPOST = function (req, res, next) {
+  if (req.user.membershipStatus !== "admin") {
+    return res.redirect("/");
+  }
+  Post.findByIdAndDelete(req.params.id, {}, (err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+};
