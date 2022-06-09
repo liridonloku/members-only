@@ -154,6 +154,6 @@ exports.logOutGet = function (req, res) {
 exports.logOutPost = function (req, res, next) {
   req.logOut((err) => {
     if (err) return next(err);
-    res.redirect("/login");
+    res.redirect("/");
   });
 };

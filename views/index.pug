@@ -2,9 +2,7 @@ extends layout
 
 block content
   if(!currentUser)
-    p
-      a.btn.btn-success(href='/login') Log In 
-      | to make a post
+    p Log in to make a post
   if(currentUser)
     a.btn.btn-success.mb-3(href='/new-post') New post
   if(posts)
