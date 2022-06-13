@@ -11,11 +11,15 @@ block content
     if(!currentUser || currentUser.membershipStatus === 'user')
       each post in posts 
         .card.mb-3 
-          .card-header Unknown author
+          .card-header
+            a(href="/membership-form") Become a member
+            |  to see the author of this post 
           .card-body 
             h5.card-title #{post.title}
             p.card-text #{post.content}
-            p.text-end.mb-0 date
+            p.text-end.mb-0
+              a(href="/membership-form") Become a member
+              |  to see the date 
     if(currentUser && currentUser.membershipStatus === 'member')
       each post in posts 
         .card.mb-3 
